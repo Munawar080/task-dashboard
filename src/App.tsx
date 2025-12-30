@@ -5,12 +5,14 @@ import ContainerHeader from './components/ui/MainContainerHeader';
 import ContainerFilter from './components/ui/containerFilter';
 import MainContainerRightSidebar from './components/layout/MainContainerRightSidebar';
 import ColumnContainerHeader from './components/ui/columnHeaders';
-import { FaCheckCircle, FaPlus, FaRegCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { FaCircleHalfStroke, FaCircleXmark } from 'react-icons/fa6';
+import IssuePopup from './components/ui/popup';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isContainerSidebarOpen, setContainerSidebarOpen] = useState(true);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   return (
     <>
       <div className="w-full flex gap-4 h-screen p-2">
@@ -23,13 +25,24 @@ function App() {
           <div className='w-full flex'>
             <div className='w-[80%]'>
               <div className="grid grid-cols-4">
+
+
                 <div className="col-span-1">
-                  <ColumnContainerHeader numberOfItems={6} label='Todo' icon={<FaRegCircle />} />
+                  <ColumnContainerHeader openPopup={() => setIsPopupOpen(true)} numberOfItems={6} label='Todo' icon={<FaRegCircle />} />
                 </div>
-                <div className="col-span-1"><ColumnContainerHeader numberOfItems={6} label='In Progress' icon={<FaCircleHalfStroke className='text-yellow-600' />} /></div>
-                <div className="col-span-1"><ColumnContainerHeader numberOfItems={6} label='Done' icon={<FaCheckCircle className='text-sky-800' />} /></div>
-                <div className="col-span-1"><ColumnContainerHeader numberOfItems={6} label='Canceled' icon={<FaCircleXmark className='text-red-600'/>} /></div>
+                <div className="col-span-1"><ColumnContainerHeader openPopup={() => setIsPopupOpen(true)} numberOfItems={6} label='In Progress' icon={<FaCircleHalfStroke className='text-yellow-600' />} /></div>
+                <div className="col-span-1"><ColumnContainerHeader openPopup={() => setIsPopupOpen(true)} numberOfItems={6} label='Done' icon={<FaCheckCircle className='text-sky-800' />} /></div>
+                <div className="col-span-1"><ColumnContainerHeader openPopup={() => setIsPopupOpen(true)} numberOfItems={6} label='Canceled' icon={<FaCircleXmark className='text-red-600' />} /></div>
               </div>
+
+
+
+              {/* 3. Conditionally render the Popup */}
+              {isPopupOpen && (
+                <div className="bg-stone-950/30 duration-300 transform fixed inset-0 flex items-center justify-center z-50">
+                  <IssuePopup onClose={() => setIsPopupOpen(false)} />
+                </div>
+              )}
             </div>
             <div className="flex justify-end  w-[20%]">
               <div className={`
@@ -52,3 +65,6 @@ function App() {
 }
 
 export default App
+
+
+
